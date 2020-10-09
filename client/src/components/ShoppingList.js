@@ -13,21 +13,24 @@ class ShoppingList extends Component {
 	
 	render() {
 		return (
-			<Container xs>
-				<Row className="justify-content-center">
-					<Col md={2}>
-						<h3 className="header">Add item</h3>
-						<ShoppingListForm/>
-					</Col>
-					<Col md="auto">
-						<ShoppingListTable/>
-					</Col>
-				</Row>
-				<Row className="justify-content-center">
-					<Button color="dark" id="logout-button">Log Out</Button>
-				</Row>
-			</Container>
-		)
+			<div>
+				<h1 className="title">Shopping List</h1>
+				<Container>
+					<Row className="justify-content-center">
+						<Col className="col-md-2">
+							<h3 className="header">Add item</h3>
+							<ShoppingListForm/>
+						</Col>
+						<Col md="auto">
+							<ShoppingListTable/>
+						</Col>
+					</Row>
+					<Row className="justify-content-center">
+						<Button variant="dark" id="logout-button">Log Out</Button>
+					</Row>
+				</Container>
+			</div>
+		);
 	}
 }
 
