@@ -5,17 +5,19 @@ class ShoppingListTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			items: [
-				{_id: 1, name: "Potato", price: 2, quantity: 2, total: 4.00},
-				{_id: 2, name: "Apple", price: 1, quantity: 1, total: 1},
-				{_id: 3, name: "abc", price: 2.5, quantity: 3, total: 7.5}
-			],
+			items: props.items,
 			isItemBeingEdited: false,
 			editedItemIndex: undefined
 		};
 
 		this.editItem = this.editItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
+	}
+
+	componentDidUpdate(prevProps) {
+		if (prevProps.items !== this.props.items) {
+			this.setState({items: this.props.items});
+		}
 	}
 
 	editItem(evt) {
@@ -26,18 +28,21 @@ class ShoppingListTable extends Component {
 			// TODO: set cells to be uneditable
 			// TODO: update state with changes to fields
 			//TODO: db req
+			// const res = await fetch(`/api/items/${itemId}`, {
+			// 	method: "PATCH", body, headers: {"Content-Type": "application/json"}
+			// });
 		} else {
 			this.setState({editedItemIndex: evt.target.parentNode.parentNode.rowIndex - 1});
 			// TODO: set cells to be editable
 		}
 	}
 
-	deleteItem(evt) {
+	async deleteItem(evt) {
 		const itemToDelete = this.state.items[evt.target.parentNode.parentNode.rowIndex - 1];
-
-		this.setState({items: this.state.items.filter(item => item._id !== itemToDelete._id)});
-
-		//TODO: db req
+		const res = await fetch(`/api/items/${itemToDelete._id}`, {method: "DELETE"});
+		if (res) {
+			this.setState({items: this.state.items.filter(item => item._id !== itemToDelete._id)});
+		}
 	}
 
 	renderTableHeader() {
@@ -62,7 +67,12 @@ class ShoppingListTable extends Component {
 					<td>{quantity}</td>
 					<td>{total}</td>
 					<td>
-						<Button className="edit-btn" variant="secondary" onClick={this.editItem}>{this.state.isItemBeingEdited && this.state.editedItemIndex === index ? "Submit" : "Edit"}</Button>
+						<Button className="edit-btn" variant="secondary" onClick={this.editItem}>
+							{this.state.isItemBeingEdited && this.state.editedItemIndex === index 
+								? "Submit"
+								: "Edit"
+							}
+						</Button>
 					</td>
 					<td>
 						<Button className="delete-btn" variant="danger" onClick={this.deleteItem}>X</Button>
@@ -76,13 +86,14 @@ class ShoppingListTable extends Component {
 		return (
 			<div>
 				<h3 className="header">Items</h3>
-				{this.state.items.length > 0 && 
-					<table className="table">
+				{this.state.items.length > 0
+					? <table className="table">
 						<tbody>
 							{this.renderTableHeader()}
 							{this.renderTableData()}
 						</tbody>
 					</table>
+					: <p>Shopping list empty</p>
 				}
 			</div>
 		);

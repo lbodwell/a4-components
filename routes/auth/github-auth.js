@@ -23,7 +23,8 @@ const setupPassport = () => {
 	passport.use(new GitHubStrategy({
 		clientID: GITHUB_CLIENT_ID,
 		clientSecret: GITHUB_CLIENT_SECRET,
-		callbackURL: "https://lbodwell-shopping-list.herokuapp.com/auth/github/callback"
+		// TODO: change for prod
+		callbackURL: "http://localhost:5000/auth/github/callback"
 	}, (accessToken, refreshToken, profile, done) => process.nextTick(() => done(null, profile))));
 }
 
@@ -33,7 +34,12 @@ router.get('/login', passport.authenticate("github", {
 
 router.get("/callback", passport.authenticate("github", {
 	failureRedirect: "/login" 
-}), (req, res) => res.redirect("../../"));
+}), (req, res) => {
+	console.log("made it to callback route");
+	//res.redirect("../../");
+	// TODO: change for prod
+	res.redirect("http://localhost:3000");
+});
 
 router.get("/account", ensureAuthenticated, (req, res) => {
 	res.send(`Hello, ${req.user.displayName}!`);

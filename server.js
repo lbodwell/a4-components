@@ -10,6 +10,7 @@ const compression = require("compression");
 const methodOverride = require("method-override");
 const helmet = require("helmet");
 const session = require("express-session");
+const cors = require("cors");
 
 const items = require("./routes/api/items");
 const githubAuth = require("./routes/auth/github-auth");
@@ -45,6 +46,7 @@ if (NODE_ENV === "development") {
 
 app.use(helmet());
 app.use(compression());
+app.use(cors());
 app.use(express.json());
 app.use(methodOverride());
 app.use(session({
@@ -70,7 +72,8 @@ app.get("/login", (req, res) => {
 });
 app.get("/logout", (req, res) => {
 	req.logout();
-	res.redirect("/login");
+	// TODO: change for prod
+	res.redirect("http://localhost:3000/login");
 });
 app.use("/", githubAuth.ensureAuthenticated, express.static(path.join("public")));
 app.get("*", (req, res) => {
