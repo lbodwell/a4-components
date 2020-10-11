@@ -19,7 +19,8 @@ class ShoppingList extends Component {
 	}
 
 	async updateData() {
-		const res = await fetch("/api/items", {method: "GET"});
+		console.log("making request");
+		const res = await fetch("http://localhost:5000/api/items", {method: "GET"});
 		const data = await res.json();
 		this.setState({items: data});
 	}
@@ -34,7 +35,7 @@ class ShoppingList extends Component {
 				<h1 className="title">Shopping List</h1>
 				<Container>
 					<Row className="justify-content-center">
-						<Col className="col-md-2">
+						<Col md={2} className="col-md-2">
 							<h3 className="header">Add item</h3>
 							<ShoppingListForm updateData={this.updateData}/>
 						</Col>

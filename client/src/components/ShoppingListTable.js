@@ -21,8 +21,14 @@ class ShoppingListTable extends Component {
 	}
 
 	editItem(evt) {
-		const itemToEdit = this.state.items[evt.target.parentNode.parentNode.rowIndex - 1];
+		const row = evt.target.parentNode.parentNode;
+		const itemToEdit = this.state.items[row.rowIndex - 1];
 		this.setState({isItemBeingEdited: !this.state.isItemBeingEdited});
+		row.childNodes.forEach(childNode => {
+			if (childNode.className === "editable-cell") {
+				childNode.contentEditable = this.state.isItemBeingEdited;
+			}
+		})
 		if (this.state.isItemBeingEdited) {
 			this.setState({editedItemIndex: undefined});
 			// TODO: set cells to be uneditable
@@ -32,19 +38,20 @@ class ShoppingListTable extends Component {
 			// 	method: "PATCH", body, headers: {"Content-Type": "application/json"}
 			// });
 		} else {
-			this.setState({editedItemIndex: evt.target.parentNode.parentNode.rowIndex - 1});
+			this.setState({editedItemIndex: row.rowIndex - 1});
+			
 			// TODO: set cells to be editable
 		}
 	}
 
 	async deleteItem(evt) {
 		const itemToDelete = this.state.items[evt.target.parentNode.parentNode.rowIndex - 1];
-		const res = await fetch(`/api/items/${itemToDelete._id}`, {method: "DELETE"});
+		const res = await fetch(`http://localhost:5000/api/items/${itemToDelete._id}`, {method: "DELETE"});
 		if (res) {
 			this.setState({items: this.state.items.filter(item => item._id !== itemToDelete._id)});
 		}
 	}
-
+ 
 	renderTableHeader() {
 		const headers = ["Name", "Price", "Quantity", "Total", "Edit", "Delete"];
 

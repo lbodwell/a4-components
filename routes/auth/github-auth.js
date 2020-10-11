@@ -8,9 +8,11 @@ const router = express.Router();
 
 const ensureAuthenticated = (req, res, next) => {
 	if (req.isAuthenticated()) {
+		console.log()
 		return next();
 	}
-	res.redirect("/login");
+	res.redirect("http://localhost:3000/login");
+	return next();
 }
 
 const setupPassport = () => {
@@ -35,10 +37,10 @@ router.get('/login', passport.authenticate("github", {
 router.get("/callback", passport.authenticate("github", {
 	failureRedirect: "/login" 
 }), (req, res) => {
-	console.log("made it to callback route");
 	//res.redirect("../../");
 	// TODO: change for prod
 	res.redirect("http://localhost:3000");
+	console.log(req.user);
 });
 
 router.get("/account", ensureAuthenticated, (req, res) => {

@@ -14,7 +14,7 @@ class ShoppingListForm extends Component {
 	async submitItem() {
 		const {name, price, quantity} = this.state.newItem;
 		const body = JSON.stringify({name, price, quantity});
-		const res = await fetch("/api/items", {method: "POST", body, headers:{"Content-Type": "application/json"}});
+		const res = await fetch("http://localhost:5000/api/items", {method: "POST", body, headers:{"Content-Type": "application/json"}});
 		if (res) {
 			this.props.updateData();
 			this.setState({newItem: {name: "", price: "", quantity: ""}});
