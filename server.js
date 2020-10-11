@@ -59,23 +59,13 @@ app.use(passport.session());
 
 app.use("/api/items", items.router);
 app.use("/auth/github", githubAuth.router);
-
-app.get("/css/style.css", (req, res) => {
-	res.sendFile(path.join(__dirname, "public/css/style.css"));
-})
-app.get("/js/login.js", (req, res) => {
-	res.sendFile(path.join(__dirname, "public/js/login.js"));
-})
-
-app.get("/login", (req, res) => {
-	res.sendFile(path.join(__dirname, "public/login.html"));
-});
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("/logout", (req, res) => {
 	req.logout();
-	// TODO: change for prod
-	res.redirect("http://localhost:3000/login");
+	res.redirect("/login");
 });
-app.use("/", githubAuth.ensureAuthenticated, express.static(path.join("public")));
+app.use("/login", express.static(path.join(__dirname, "/client/build")));
+app.use("/", githubAuth.ensureAuthenticated, express.static(path.join(__dirname, "/client/build")));
 app.get("*", (req, res) => {
 	res.status(404).send("Error 404. Not found.");
 });

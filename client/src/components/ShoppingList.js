@@ -3,6 +3,7 @@ import {Container, Row, Col, Button} from "react-bootstrap";
 
 import ShoppingListForm from "./ShoppingListForm";
 import ShoppingListTable from "./ShoppingListTable";
+import Login from "./Login";
  
 class ShoppingList extends Component {
 	constructor(props) {
@@ -14,24 +15,28 @@ class ShoppingList extends Component {
 		this.updateData = this.updateData.bind(this);
 	}
 	
-	componentDidMount() {
-		this.updateData();
+	async componentDidMount() {
+		const res = await fetch("/api/items", {method: "GET"});
+		const data = await res.json();
+		this.setState({items: data});
 	}
 
 	async updateData() {
+		console.log("updating data");
 		const res = await fetch("/api/items", {method: "GET"});
 		const data = await res.json();
 		this.setState({items: data});
 	}
 
 	handleLogout() {
-		window.location.href = "http://localhost:5000/logout";
+		window.location.href = "/logout";
 	}
 
 	render() {
 		return (
 			<div>
-				<h1 className="title">Shopping List</h1>
+				{/* <h1 className="title">Shopping List</h1> */}
+				<Login/>
 				<Container>
 					<Row className="justify-content-center">
 						<Col className="col-md-2">

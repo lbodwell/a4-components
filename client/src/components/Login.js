@@ -2,7 +2,7 @@ import React from "react";
 import {Row, Button} from "react-bootstrap";
 
 const handleLogin = () => {
-	window.location.href = "http://localhost:5000/auth/github/login";
+	window.location.href = "/auth/github/login";
 }
 
 const Login = () => {

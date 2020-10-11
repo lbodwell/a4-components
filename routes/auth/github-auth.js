@@ -35,10 +35,7 @@ router.get('/login', passport.authenticate("github", {
 router.get("/callback", passport.authenticate("github", {
 	failureRedirect: "/login" 
 }), (req, res) => {
-	console.log("made it to callback route");
-	//res.redirect("../../");
-	// TODO: change for prod
-	res.redirect("http://localhost:3000");
+	res.redirect("../../");
 });
 
 router.get("/account", ensureAuthenticated, (req, res) => {
