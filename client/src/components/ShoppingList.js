@@ -9,7 +9,7 @@ class ShoppingList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			items: [{}, {}, {}],
+			items: [],
 			isAuthenticated: false
 		}
 
@@ -35,7 +35,7 @@ class ShoppingList extends Component {
 	render() {
 		return (
 			<div>
-				{true
+				{this.state.isAuthenticated
 					? <Container>
 						<h1 className="title">Shopping List</h1>
 						<Row className="justify-content-center">
