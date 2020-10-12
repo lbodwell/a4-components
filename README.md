@@ -21,10 +21,17 @@ Do the following to complete this assignment:
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Shopping List
 
-your hosting link e.g. http://a4-charlieroberts.glitch.me
+Luke Bodwell
 
-Include a very brief summary of your project here and what you changed / added to assignment #3. Briefly (3–4 sentences) answer the following question: did the new technology improve or hinder the development experience?
+https://a4-luke-bodwell.herokuapp.com/
 
-Unlike previous assignments, this assignment will be solely graded on whether or not you successfully complete it. Partial credit will be generously given.
+For this project I rewrote the frontend of A3 using React. This was my first time really using a frontend framework for a non-trivial project.
+It was definitely a bit cumbersome at first and I didn't really see a ton of benefits on this project but I can see how useful it would be for very
+large-scale projects. State management in React took me a while to get the hang of but is ultimately very useful. I ran into some issues with routing
+and authentication especially when using the development server provided by create-react-app. I ended up making some pretty hacky fixes that would have
+required re-writing a large portion of the backend to implement properly. The library I used for Bootstrap support in React also seemed to be a bit finnicky.
+The styling of the page turned out different from A3 despite using the same CSS. Heroku also gave me some trouble with installing client dependencies and
+building the React application when it's deployed. I ended up figuring it out and learned a lot working on this project. I will definitely be experimenting
+more with React and other frontend frameworks on future projects.
