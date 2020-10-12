@@ -42,7 +42,7 @@ router.get("/account", ensureAuthenticated, (req, res) => {
 });
 
 router.get("/is-authenticated", (req, res) => {
-	res.json({isAuthenticated: req.user.username != null});
+	res.json({isAuthenticated: req.user != null});
 });
 
 

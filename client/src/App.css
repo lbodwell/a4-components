@@ -1,6 +1,5 @@
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css";
 @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
-@import "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css";
 
 body {
 	padding: 32px;
@@ -10,7 +9,7 @@ body {
 
 .title {
 	text-align: center;
-	margin-bottom: 32px
+	margin-bottom: 48px
 }
 
 #submit-button {
@@ -26,11 +25,11 @@ body {
 }
 
 .edit-button {
-
+	border-radius: 8px;
 }
 
 .delete-button {
-	
+	border-radius: 8px;
 }
 
 .header {

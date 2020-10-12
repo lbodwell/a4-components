@@ -100,7 +100,7 @@ class ShoppingListTable extends Component {
 					<td className="editable-cell">{quantity}</td>
 					<td>{total}</td>
 					<td>
-						<Button className="edit-btn" variant="secondary" onClick={this.editItem}>
+						<Button className="edit-button" variant="secondary" onClick={this.editItem}>
 							{this.state.isItemBeingEdited && this.state.editedItemIndex === index 
 								? "Submit"
 								: "Edit"
@@ -108,7 +108,7 @@ class ShoppingListTable extends Component {
 						</Button>
 					</td>
 					<td>
-						<Button className="delete-btn" variant="danger" onClick={this.deleteItem}>X</Button>
+						<Button className="delete-button" variant="danger" onClick={this.deleteItem}>X</Button>
 					</td>
 				</tr>
 			);

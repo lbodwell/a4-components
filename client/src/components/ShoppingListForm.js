@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Form, Button} from "react-bootstrap";
+import {Row, Form, Button} from "react-bootstrap";
 
 class ShoppingListForm extends Component {
 	constructor(props) {
@@ -41,7 +41,9 @@ class ShoppingListForm extends Component {
 						<Form.Control type="text" value={newItem.quantity} onChange={evt => this.setState({newItem: {...newItem, quantity: evt.target.value}})} placeholder="2" required></Form.Control>
 					</Form.Group>
 				</Form.Row>
-				<Button variant="primary" id="submit-button" onClick={this.submitItem}>Submit</Button>
+				<Row className="row justify-content-center">
+					<Button variant="primary" id="submit-button" onClick={this.submitItem}>Submit</Button>
+				</Row>
 			</Form>
 		);
 	}

@@ -9,7 +9,7 @@ class ShoppingList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			items: [],
+			items: [{}, {}, {}],
 			isAuthenticated: false
 		}
 
@@ -35,11 +35,11 @@ class ShoppingList extends Component {
 	render() {
 		return (
 			<div>
-				{this.state.isAuthenticated
+				{true
 					? <Container>
 						<h1 className="title">Shopping List</h1>
 						<Row className="justify-content-center">
-							<Col className="col-md-2">
+							<Col md={3} className="col-md-2">
 								<h3 className="header">Add item</h3>
 								<ShoppingListForm updateData={this.updateData}/>
 							</Col>
