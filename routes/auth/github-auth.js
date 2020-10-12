@@ -23,8 +23,7 @@ const setupPassport = () => {
 	passport.use(new GitHubStrategy({
 		clientID: GITHUB_CLIENT_ID,
 		clientSecret: GITHUB_CLIENT_SECRET,
-		// TODO: change for prod
-		callbackURL: "http://localhost:5000/auth/github/callback"
+		callbackURL: "https://a4-luke-bodwell.herokuapp.com/auth/github/callback"
 	}, (accessToken, refreshToken, profile, done) => process.nextTick(() => done(null, profile))));
 }
 
