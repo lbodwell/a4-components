@@ -42,4 +42,9 @@ router.get("/account", ensureAuthenticated, (req, res) => {
 	res.send(`Hello, ${req.user.displayName}!`);
 });
 
+router.get("/is-authenticated", (req, res) => {
+	res.json({isAuthenticated: req.user.username != null});
+});
+
+
 module.exports = {router, passport, ensureAuthenticated, setupPassport};

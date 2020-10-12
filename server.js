@@ -62,7 +62,7 @@ app.use("/auth/github", githubAuth.router);
 app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("/logout", (req, res) => {
 	req.logout();
-	res.redirect("/login");
+	res.status(202).redirect("/");
 });
 app.use("/login", express.static(path.join(__dirname, "/client/build")));
 app.use("/", githubAuth.ensureAuthenticated, express.static(path.join(__dirname, "/client/build")));

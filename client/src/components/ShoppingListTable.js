@@ -21,20 +21,53 @@ class ShoppingListTable extends Component {
 	}
 
 	editItem(evt) {
-		const itemToEdit = this.state.items[evt.target.parentNode.parentNode.rowIndex - 1];
-		this.setState({isItemBeingEdited: !this.state.isItemBeingEdited});
-		if (this.state.isItemBeingEdited) {
-			this.setState({editedItemIndex: undefined});
-			// TODO: set cells to be uneditable
-			// TODO: update state with changes to fields
-			//TODO: db req
-			// const res = await fetch(`/api/items/${itemId}`, {
-			// 	method: "PATCH", body, headers: {"Content-Type": "application/json"}
-			// });
-		} else {
-			this.setState({editedItemIndex: evt.target.parentNode.parentNode.rowIndex - 1});
-			// TODO: set cells to be editable
-		}
+		const row = evt.target.parentNode.parentNode;
+		const itemToEdit = this.state.items[row.rowIndex - 1];
+		this.setState({isItemBeingEdited: !this.state.isItemBeingEdited}, async () => {
+			row.childNodes.forEach(childNode => {
+				if (childNode.className === "editable-cell") {
+					childNode.contentEditable = this.state.isItemBeingEdited;
+				}
+			});
+			if (this.state.isItemBeingEdited) {
+				this.setState({editedItemIndex: row.rowIndex - 1});
+			} else {
+				let editedFields = {};
+				const newName = row.cells[0].innerHTML;
+				let newPrice = row.cells[1].innerHTML;
+				let newQty = row.cells[2].innerHTML;
+				newPrice = parseFloat(newPrice.replace("$", "").replace(",", ""));
+				newQty = parseInt(newQty);
+
+				let items = [...this.state.items];
+				let item = {...items[this.state.editedItemIndex]};
+				if (newName !== item.name) {
+					editedFields.name = newName;
+					item.name = newName;
+				}
+				if (newPrice !== parseFloat(item.price)) {
+					editedFields.price = newPrice;
+					item.price = newPrice;
+					item.total = newPrice * item.quantity;
+				}
+				if (newQty !== parseInt(item.quantity)) {
+					editedFields.quantity = newQty;
+					item.quantity = newQty;
+					item.total = newQty * item.price;
+				}
+				items[this.state.editedItemIndex] = item;
+
+				const {name, price, quantity} = editedFields;
+				const body = JSON.stringify({name, price, quantity});
+				const res = await fetch(`/api/items/${itemToEdit._id}`, {
+					method: "PATCH", body, headers: {"Content-Type": "application/json"}
+				});
+				if (res) {
+					this.setState({items});
+				}
+				this.setState({editedItemIndex: undefined});
+			}
+		});
 	}
 
 	async deleteItem(evt) {
@@ -62,9 +95,9 @@ class ShoppingListTable extends Component {
 			total = `$${parseFloat(total).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}`;
 			return (
 				<tr key={index}>
-					<td>{name}</td>
-					<td>{price}</td>
-					<td>{quantity}</td>
+					<td className="editable-cell">{name}</td>
+					<td className="editable-cell">{price}</td>
+					<td className="editable-cell">{quantity}</td>
 					<td>{total}</td>
 					<td>
 						<Button className="edit-btn" variant="secondary" onClick={this.editItem}>

@@ -10,6 +10,7 @@ body {
 
 .title {
 	text-align: center;
+	margin-bottom: 32px
 }
 
 #submit-button {
@@ -18,11 +19,18 @@ body {
 
 #login-button {
 	margin-top: 48px;
-	margin-bottom: 32px;
 }
 
 #logout-button {
 	margin-top: 32px;
+}
+
+.edit-button {
+
+}
+
+.delete-button {
+	
 }
 
 .header {

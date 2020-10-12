@@ -8,10 +8,7 @@ import "./App.css";
 
 const App = () => {
 	return (
-		<Router>
-			<Route name="Home" path="/" exact component={ShoppingList}></Route>
-			<Route name="Login" path="/login" exact component={Login}></Route>
-		</Router>
+		<ShoppingList/>
 	);
 }
 

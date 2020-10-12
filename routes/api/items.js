@@ -25,7 +25,6 @@ router.post("/", githubAuth.ensureAuthenticated, async (req, res) => {
 	price = parseFloat(price.replace("$", "").replace(",", ""));
 	quantity = parseInt(quantity);
 	const total = price * quantity;
-	//TODO: clean up
 	const newItem = new Item({username: req.user.username, name, price, quantity, total});
 	
 	res.json(await newItem.save());

@@ -9,23 +9,23 @@ class ShoppingList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			items: []
+			items: [],
+			isAuthenticated: false
 		}
 
 		this.updateData = this.updateData.bind(this);
 	}
-	
-	async componentDidMount() {
+
+	async updateData() {
 		const res = await fetch("/api/items", {method: "GET"});
 		const data = await res.json();
 		this.setState({items: data});
 	}
 
-	async updateData() {
-		console.log("updating data");
-		const res = await fetch("/api/items", {method: "GET"});
+	async componentDidMount() {
+		const res = await fetch("/auth/github/is-authenticated", {method: "GET"});
 		const data = await res.json();
-		this.setState({items: data});
+		this.setState({isAuthenticated: data.isAuthenticated}, () => this.updateData());
 	}
 
 	handleLogout() {
@@ -35,22 +35,24 @@ class ShoppingList extends Component {
 	render() {
 		return (
 			<div>
-				{/* <h1 className="title">Shopping List</h1> */}
-				<Login/>
-				<Container>
-					<Row className="justify-content-center">
-						<Col className="col-md-2">
-							<h3 className="header">Add item</h3>
-							<ShoppingListForm updateData={this.updateData}/>
-						</Col>
-						<Col md="auto">
-							<ShoppingListTable items={this.state.items}/>
-						</Col>
-					</Row>
-					<Row className="justify-content-center">
-						<Button variant="dark" id="logout-button" onClick={this.handleLogout}>Log Out</Button>
-					</Row>
-				</Container>
+				{this.state.isAuthenticated
+					? <Container>
+						<h1 className="title">Shopping List</h1>
+						<Row className="justify-content-center">
+							<Col className="col-md-2">
+								<h3 className="header">Add item</h3>
+								<ShoppingListForm updateData={this.updateData}/>
+							</Col>
+							<Col md="auto">
+								<ShoppingListTable items={this.state.items}/>
+							</Col>
+						</Row>
+						<Row className="justify-content-center">
+							<Button variant="dark" id="logout-button" onClick={this.handleLogout}>Log Out</Button>
+						</Row>
+					</Container>
+					: <Login/>
+				}
 			</div>
 		);
 	}
